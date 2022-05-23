@@ -41,8 +41,8 @@ RUN apt-get update && \
 
 
 #Configure git
-RUN git config --global user.name "<username>" \
-    && git config --global user.email "<email>"
+RUN git config --global user.name "spence-rat" \
+    && git config --global user.email "spence.rat@outlook.com"
 
 WORKDIR /
 RUN git clone https://github.com/spence-rat/metasploit-framework.git
@@ -85,4 +85,15 @@ RUN gem install bundler:1.17.3
 RUN bundle install
 RUN chmod +x msfconsole
 
-#COPY encrypt.rb /metasploit-framework/scripts/meterpreter/encrypt.rb
+COPY encrypt.rb /metasploit-framework/scripts/meterpreter/encrypt.rb
+COPY autoencrypt.rc /
+COPY sophosploit.sh /
+
+WORKDIR /opt/set/src/webattack/hta/
+RUN rm -f main.py
+COPY main.py /opt/set/src/webattack/hta/main.py
+RUN chmod +x /opt/set/src/webattack/hta/main.py
+
+WORKDIR /
+RUN chmod +x /sophosploit.sh
+CMD ["/bin/bash","/sophosploit.sh"]
