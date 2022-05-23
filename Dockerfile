@@ -41,8 +41,8 @@ RUN apt-get update && \
 
 
 #Configure git
-RUN git config --global user.name "spence-rat" \
-    && git config --global user.email "spence.rat@outlook.com"
+RUN git config --global user.name "<username>" \
+    && git config --global user.email "<email>"
 
 WORKDIR /
 RUN git clone https://github.com/spence-rat/metasploit-framework.git
