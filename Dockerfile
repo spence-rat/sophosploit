@@ -16,7 +16,7 @@ RUN apt-get update && \
     snmp \
     curl \
     vim \
-    git \ 
+    git \
     python3-pip \
     build-essential \
     zlib1g \
@@ -30,7 +30,7 @@ RUN apt-get update && \
     libxml2-dev \
     libxslt1-dev \
     libssl-dev \
-    tzdata \ 
+    tzdata \
     net-tools \
     ruby \
     ruby-dev \
@@ -38,12 +38,14 @@ RUN apt-get update && \
     pgadmin3 \
     sqlite3 && \
     rm -rf /var/lib/apt/lists/* && rm -rf /var/cache/apt/*
-    
+
 
 #Configure git
 RUN git config --global user.name "spence-rat" \
     && git config --global user.email "spence.rat@outlook.com"
-RUN git clone https://github.com/spence-rat/msf5.git /metasploit-framework
+
+WORKDIR /
+RUN git clone https://github.com/spence-rat/metasploit-framework.git
 RUN git clone https://github.com/spence-rat/social-engineer-toolkit.git/ /opt/set
 
 #Place the answerfile for seautomate
@@ -75,12 +77,12 @@ RUN git clone https://github.com/spence-rat/apache2.git
 #Adjust apache2 modules
 WORKDIR /usr/lib/apache2
 RUN rm -rf modules
-RUN git clone https://github.com/spence-rat/apache2modules.git
+RUN git clone https://github.com/spence-rat/modules.git
 
 #Install metasploit framework version 5
-WORKDIR /msf5/metasploit-framework-5.0.101
+WORKDIR /metasploit-framework
 RUN gem install bundler:1.17.3
 RUN bundle install
 RUN chmod +x msfconsole
 
-COPY encrypt.rb /metasploit-framework/scripts/meterpreter/encrypt.rb
+#COPY encrypt.rb /metasploit-framework/scripts/meterpreter/encrypt.rb
